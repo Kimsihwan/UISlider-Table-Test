@@ -8,18 +8,47 @@
 
 import UIKit
 
-class ViewController: UIViewController {
-
+class ViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 100
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+         let identifier = "RE"
+        let cell = myTable.dequeueReusableCell(withIdentifier: identifier, for: indexPath)
+        
+        cell.textLabel?.text = String(val + indexPath.row)
+        
+        return cell
+    }
+    
+    @IBOutlet weak var myslide: UISlider!
+    @IBOutlet weak var mylbl: UILabel!
+    @IBOutlet weak var myTable: UITableView!
+    
+    var val = 0
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
+        myTable.delegate = self
+        myTable.dataSource = self
+        
     }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    
+    @IBAction func slide(_ sender: Any) {
+      
+        // TableView의 데이터를 새로 뿌려줌
+        myTable.reloadData()
+        
+        
+     print(Int(myslide.value))
+     val = Int(myslide.value)
+        
+     print("움직")
+     mylbl.text = String(val)
+        
     }
-
-
+    
 }
 
